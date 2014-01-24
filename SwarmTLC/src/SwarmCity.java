@@ -141,7 +141,6 @@ public class SwarmCity extends Thread {
 		System.out.println ("Loading size from building file");
 
 		BufferedReader in;
-
 		in = new BufferedReader(new FileReader(this.buildingFile));
 
 		String line;
@@ -716,10 +715,11 @@ public class SwarmCity extends Thread {
 
     public static void main(String[] args) {
         for(int i = 0; i < args.length; i++) {
+        	System.out.println(args[i]);
             if(args[i].equals("") || args[i].equals("null"))
                 args[i] = null;
         }
-
+    	System.out.println(args.length);
         SwarmCity theCity = new SwarmCity(null, args[0], args[1], args[2], args[3], Integer.parseInt(args[4]));
 
         theCity.run();

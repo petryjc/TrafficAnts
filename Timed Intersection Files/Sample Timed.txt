@@ -1,0 +1,3 @@
+# row column | light pattern (numbers 1 through 9) | wait times (same number of entries as light pattern)
+
+default | 6 7 8 9 | 20 20 20 20

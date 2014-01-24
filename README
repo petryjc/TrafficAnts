@@ -1,0 +1,11 @@
+To run the GUI run:
+
+java SwarmTLC
+
+To run the CLI run:
+
+java SwarmCity [building file] [intersection file] [road file] [ticks to run]
+
+To generate a random city:
+
+java GenerateCity [width] [height] [density] [popdensity]

@@ -30,9 +30,7 @@ public class Road extends Time {
 
 	@Override
 	public void advanceTime() {
-		for(Car c : this.currentCars) {
-			c.advanceTime();
-		}
+		
 	}	
 	
 }

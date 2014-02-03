@@ -23,7 +23,7 @@ public class CarAStar extends Car {
 		}
 	}
 
-	private Deque<Road> roadList = new LinkedList<Road>();
+	private Deque<Road> roadList;
 	@Override
 	public Road nextRoad() {
 		if(roadList == null) {
@@ -37,7 +37,6 @@ public class CarAStar extends Car {
 
 	private Deque<Road> generateRoute() {
 		Comparator<Search> comparator = new Comparator<Search>() {
-			@Override
 			public int compare(Search arg0, Search arg1) {
 				return (int) ((arg0.time + arg0.state.location.distance(destination.location) * Road.maxSpeed) - 
 						(arg1.time + arg1.state.location.distance(destination.location) * Road.maxSpeed));
@@ -55,6 +54,7 @@ public class CarAStar extends Car {
 			if(node.state == this.destination){
 				Deque<Road> output = new LinkedList<Road>();
 				while (node.parent != null) {
+					System.out.println(node.state.id);
 					output.push(node.road);
 					node = node.parent;
 				}

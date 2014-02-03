@@ -44,12 +44,12 @@ public class Intersection extends Time{
 	
 	public void advanceTime() {
 		currentCount++;
-		if(currentRoad == null) {
-			currentRoad = incomingRoads.get(0);
+		if(currentRoad == null && getIncomingRoads().size() > 0) {
+			currentRoad = getIncomingRoads().get(0);
 		}
 		if(currentCount > ticksPerLight) {
 			currentCount = 0;
-			currentRoad = incomingRoads.get((incomingRoads.indexOf(currentRoad) + 1) % incomingRoads.size());
+			currentRoad = getIncomingRoads().get((getIncomingRoads().indexOf(currentRoad) + 1) % getIncomingRoads().size());
 		}
 	}
 	

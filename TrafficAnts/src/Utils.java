@@ -31,7 +31,6 @@ public class Utils {
 			if(node.state == c.destination){
 				Deque<Road> output = new LinkedList<Road>();
 				while (node.parent != null) {
-					System.out.println(node.state.id);
 					output.push(node.road);
 					node = node.parent;
 				}

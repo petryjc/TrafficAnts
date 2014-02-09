@@ -69,7 +69,7 @@ public class SetupParser {
 				Intersection end = Intersection.intersectionList.get(arg2);
 				
 				Double speedLimit = arg3;
-				new Road(start, end, speedLimit);
+				new Road(start, end, speedLimit, 0.00001);
 				
 				counter++;
 			}

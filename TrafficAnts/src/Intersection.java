@@ -3,7 +3,13 @@ import java.util.ArrayList;
 
 public class Intersection extends Time{
 	public static ArrayList<Intersection> intersectionList = new ArrayList<Intersection>();
-
+	
+	static int ticksPerLight = 20;
+	int currentCount = 0;
+	Road currentRoad;
+	int id;
+	Point location;
+	
 	private ArrayList<Road> incomingRoads;
 	ArrayList<Road> getIncomingRoads() {
 		if (incomingRoads == null) {
@@ -30,12 +36,6 @@ public class Intersection extends Time{
 		return outgoingRoads;
 	}
 
-	static int ticksPerLight = 20;
-	int currentCount = 0;
-	Road currentRoad;
-	int id;
-	Point location;
-	
 	public Intersection(int id, int x, int y) {
 		this.location = new Point(x,y);
 		this.id = id;

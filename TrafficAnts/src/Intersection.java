@@ -35,7 +35,7 @@ public class Intersection extends Time{
 	Road currentRoad;
 	int id;
 	Point location;
-	
+	//the constructor is right here
 	public Intersection(int id, int x, int y) {
 		this.location = new Point(x,y);
 		this.id = id;

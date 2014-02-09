@@ -3,9 +3,9 @@ public class TrafficAnts {
 	public static void main(String[] args) {
 		
 		
-//		MapGenerator m = new MapGenerator("MapGenTest.txt", 50, 200, 100, .7f, 5);
-//		m.generateMapFile();
-//		m.printArray();
+		MapGenerator m = new MapGenerator("MapGenTest.txt", 50, 200, 100, .7f, 5);
+		m.generateMapFile();
+		m.printArray();
 		
 		SetupParser setup = new SetupParser("MapGenTest.txt");
 		

@@ -18,7 +18,7 @@ public abstract class Car extends Time{
 	}
 	
 	public double bufferZone() {
-		return -50;
+		return 1;
 	}
 	
 	public double distanceIncrement() {
@@ -32,7 +32,7 @@ public abstract class Car extends Time{
 				this.currentRoad = this.nextRoad();
 				if(this.currentRoad == null) {
 					if(this.start == this.destination) {
-						this.endTime = 0;
+						this.endTime = Time.ticks;
 						System.out.println("You were already there you twat!!!");
 					} else {
 						System.out.println("A star could not get from intersection " + this.start.id + " to " + this.destination.id);
@@ -43,10 +43,9 @@ public abstract class Car extends Time{
 				this.currentRoad.currentCars.add(this);
 				this.distanceAlongRoad = 0;
 			} else if(Time.ticks > startTime){
-				System.out.println(Time.ticks);
 				Car closestFront = null;
 				for(Car c : currentRoad.currentCars) { 
-					if(c.distanceAlongRoad > this.distanceAlongRoad && closestFront == null || closestFront != null && c.distanceAlongRoad < closestFront.distanceAlongRoad) { 
+					if(c != this && c.distanceAlongRoad > this.distanceAlongRoad && (closestFront == null || closestFront != null && c.distanceAlongRoad < closestFront.distanceAlongRoad)) { 
 						closestFront = c;
 					}
 				}
@@ -54,18 +53,17 @@ public abstract class Car extends Time{
 				if(closestFront == null) {
 					distancePossible = distanceIncrement();
 				} else {
-					distancePossible = Math.min(distanceIncrement(), closestFront.distanceAlongRoad - this.distanceAlongRoad - bufferZone());
+					distancePossible = Math.max(Math.min(distanceIncrement(), closestFront.distanceAlongRoad - this.distanceAlongRoad - bufferZone()), 0);
 				}
 				if((this.currentRoad.distance() - this.distanceAlongRoad) < distancePossible) { //We're at the end of the road
 					if(this.currentRoad.end.currentRoad == this.currentRoad) { //And the light is green
 						double remainingTick = (this.currentRoad.distance() - this.distanceAlongRoad)/ this.currentRoad.speedLimit;
 						Road next = this.nextRoad();
 						if(next == null) {
-							System.out.println("This place");
 							if(this.currentRoad.end == this.destination) {
 								this.endTime = Time.ticks + 1 - remainingTick;
 								this.currentRoad.currentCars.remove(this);
-								System.out.println("This worked sorta " + endTime);
+								System.out.println("This worked sorta " + (endTime - startTime) + " as a " + this.getClass());
 							} else {
 								System.out.println("Got to intersection " + this.currentRoad.end.id + " but couldn't get to " + this.destination.id);
 							}

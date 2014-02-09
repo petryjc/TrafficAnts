@@ -8,11 +8,14 @@ public class Road extends Time {
 	ArrayList<Car> currentCars;
 	double speedLimit;
 	Point2D dir;
+	double pheromone;
+	ArrayList<Integer> travelTimes = new ArrayList<Integer>();
 	
-	public Road(Intersection start, Intersection end, double speedLimit) {
+	public Road(Intersection start, Intersection end, double speedLimit, double pheromone) {
 		this.start = start;
 		this.end = end;
 		this.speedLimit = speedLimit;
+		this.pheromone = pheromone;
 		Road.maxSpeed = Math.max(Road.maxSpeed,this.speedLimit);
 		
 		this.currentCars = new ArrayList<Car>();

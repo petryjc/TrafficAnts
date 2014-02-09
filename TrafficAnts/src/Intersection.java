@@ -3,7 +3,13 @@ import java.util.ArrayList;
 
 public class Intersection extends Time{
 	public static ArrayList<Intersection> intersectionList = new ArrayList<Intersection>();
-
+	
+	static int ticksPerLight = 20;
+	int currentCount = 0;
+	Road currentRoad;
+	int id;
+	Point location;
+	
 	private ArrayList<Road> incomingRoads;
 	ArrayList<Road> getIncomingRoads() {
 		if (incomingRoads == null) {
@@ -30,12 +36,15 @@ public class Intersection extends Time{
 		return outgoingRoads;
 	}
 
+<<<<<<< HEAD
 	static int ticksPerLight = 20;
 	int currentCount = 0;
 	Road currentRoad;
 	int id;
 	Point location;
 	//the constructor is right here
+=======
+>>>>>>> ff30a94965ceb6055a002d905fd619bc7ab4dec1
 	public Intersection(int id, int x, int y) {
 		this.location = new Point(x,y);
 		this.id = id;

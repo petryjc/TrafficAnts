@@ -81,7 +81,7 @@ public class SetupParser {
 				Intersection end = Intersection.intersectionList.get(arg2);
 				
 				Double speedLimit = arg3;
-				new Road(start, end, speedLimit, 0.00001);
+				new Road(start, end, speedLimit);
 				
 				counter++;
 			}
@@ -118,7 +118,7 @@ public class SetupParser {
 				if(arg4.compareTo("*") == 0){
 					new CarAStar(start, end, arg3);
 				}else{
-					System.out.println("Car that isn't a star");
+					new CarMixedCurrent(start, end, arg3);
 				}
 				
 				

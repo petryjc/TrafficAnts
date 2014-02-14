@@ -18,8 +18,14 @@ public class MapGenerator {
 	private ArrayList<Intersection> intersectionsToWrite;
 	private ArrayList<Character> carTypes;  
 	
-	final int MIN_DIST_BET_CITIES = 100;
+	final int MIN_DIST_BET_CITIES = 25;
 	
+	public static void main(String[] args) {
+		 MapGenerator m = new MapGenerator("MapGenTest.txt", 100, 200, 5,
+		 1f, 500);
+		 m.generateMapFile();
+		 m.printArray();
+	}
 	
 	public MapGenerator(String filename, int numberOfCities, int width, int duration, float percentAStar, int totalNumOfCars){
 		this.filename = filename;

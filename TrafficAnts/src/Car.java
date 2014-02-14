@@ -18,7 +18,7 @@ public abstract class Car extends Time{
 	}
 	
 	public double bufferZone() {
-		return 1;
+		return 3;
 	}
 	
 	public double distanceIncrement() {
@@ -63,7 +63,7 @@ public abstract class Car extends Time{
 							if(this.currentRoad.end == this.destination) {
 								this.endTime = Time.ticks + 1 - remainingTick;
 								this.currentRoad.currentCars.remove(this);
-								System.out.println("This worked sorta " + (endTime - startTime) + " as a " + this.getClass());
+								//System.out.println("This worked sorta " + (endTime - startTime) + " as a " + this.getClass());
 							} else {
 								System.out.println("Got to intersection " + this.currentRoad.end.id + " but couldn't get to " + this.destination.id);
 							}

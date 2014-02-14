@@ -20,15 +20,27 @@ public class CarMixed extends Car {
 		if(roadList == null) {
 			Comparator<Utils.Search> comparator = new Comparator<Utils.Search>() {
 				public int compare(Utils.Search arg0, Utils.Search arg1) {
-					int dist0 = 0, dist1 = 0;
+					int time0 = 0, time1 = 0;
+					double timea = 0, timeb;
 					for(int i: arg0.road.travelTimes) {
-						dist0 += i;
+						time0 += i;
+					}
+					if(arg0.road.travelTimes.size() == 0) {
+						timea = arg0.state.location.distance(destination.location) * Road.maxSpeed;
+					} else {
+						timea = time0/arg0.road.travelTimes.size();
 					}
 					for(int i: arg1.road.travelTimes) {
-						dist1 += i;
+						time1 += i;
 					}
-					return (int) ((arg0.time + arg0.state.location.distance(destination.location) * Road.maxSpeed + dist0/(double)arg0.road.travelTimes.size()) - 
-							(arg1.time + arg1.state.location.distance(destination.location) * Road.maxSpeed + dist1/(double)arg1.road.travelTimes.size()));
+					if(arg1.road.travelTimes.size() == 0) {
+						timeb = arg1.state.location.distance(destination.location) * Road.maxSpeed;
+					} else {
+						timeb = time1/arg1.road.travelTimes.size();
+					}
+					
+					return (int) ((arg0.time + arg0.state.location.distance(destination.location) * Road.maxSpeed + timea) - 
+							(arg1.time + arg1.state.location.distance(destination.location) * Road.maxSpeed + timeb));
 				}
 			};
 			roadList = Utils.generateRoute(this, comparator, this.start);

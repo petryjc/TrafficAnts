@@ -32,12 +32,11 @@ public abstract class Car extends Time{
 				this.currentRoad = this.nextRoad();
 				if(this.currentRoad == null) {
 					if(this.start == this.destination) {
-						this.endTime = Time.ticks;
 						System.out.println("You were already there you twat!!!");
 					} else {
 						System.out.println("A star could not get from intersection " + this.start.id + " to " + this.destination.id);
 					}
-					this.finished = true;
+					destinationReached();
 					return;
 				}
 				this.currentRoad.currentCars.add(this);
@@ -61,13 +60,12 @@ public abstract class Car extends Time{
 						Road next = this.nextRoad();
 						if(next == null) {
 							if(this.currentRoad.end == this.destination) {
-								this.endTime = Time.ticks + 1 - remainingTick;
 								this.currentRoad.currentCars.remove(this);
 								//System.out.println("This worked sorta " + (endTime - startTime) + " as a " + this.getClass());
 							} else {
 								System.out.println("Got to intersection " + this.currentRoad.end.id + " but couldn't get to " + this.destination.id);
 							}
-							finished = true;
+							destinationReached();
 							return;
 						}
 						this.currentRoad.currentCars.remove(this);
@@ -82,6 +80,11 @@ public abstract class Car extends Time{
 				}		
 			}
 		}			
+	}
+	
+	public void destinationReached() {
+		this.endTime = Time.ticks;
+		this.finished = true;
 	}
 	
 	public abstract Road nextRoad();

@@ -118,7 +118,7 @@ public class SetupParser {
 				if(arg4.compareTo("*") == 0){
 					new CarAStar(start, end, arg3);
 				}else{
-					new CarMixedCurrent(start, end, arg3);
+					new CarSwarm(start, end, arg3);
 				}
 				
 				

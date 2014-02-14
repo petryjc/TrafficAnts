@@ -1,5 +1,6 @@
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Intersection extends Time{
 	public static ArrayList<Intersection> intersectionList = new ArrayList<Intersection>();
@@ -36,6 +37,21 @@ public class Intersection extends Time{
 		return outgoingRoads;
 	}
 
+	private HashMap<Intersection, HashMap<Road,Double>> pheromone;
+	public HashMap<Road,Double> getPheromone(Intersection destination) {
+		if(pheromone == null) {
+			pheromone = new HashMap<Intersection, HashMap<Road,Double>>();
+			for(Intersection i: intersectionList) {
+				HashMap<Road,Double> map = new HashMap<Road,Double>();
+				for(Road r : getOutgoingRoads()) {
+					map.put(r, 0.00001);
+				}
+				pheromone.put(i, map);
+			}
+		}
+		return pheromone.get(destination);
+	}
+	
 	public Intersection(int id, int x, int y) {
 		this.location = new Point(x,y);
 		this.id = id;
@@ -50,6 +66,11 @@ public class Intersection extends Time{
 		if(currentCount > ticksPerLight) {
 			currentCount = 0;
 			currentRoad = getIncomingRoads().get((getIncomingRoads().indexOf(currentRoad) + 1) % getIncomingRoads().size());
+		}
+		for(Intersection destination : intersectionList) {
+			for(Road r : getPheromone(destination).keySet()) {
+				getPheromone(destination).put(r, getPheromone(destination).get(r) * CarSwarm.decayInverse);
+			}
 		}
 	}
 	

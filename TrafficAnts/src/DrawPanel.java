@@ -22,18 +22,17 @@ public class DrawPanel extends JPanel {
 
         super.paintComponent(g);            // call superclass to make panel display correctly
 
-        for(Road r : Road.roadList){
-        	r.draw(g);
-        }
-        for(Car c:Car.carList){
-        	c.draw(g);
-        }
-        for(Intersection i : Intersection.intersectionList){
-        	i.draw(g);
+        for(int i = 0; i < Road.roadList.size(); i++){
+        	Road.roadList.get(i).draw(g);
         }
         
+        for(int i = 0; i < Intersection.intersectionList.size(); i++){
+        	Intersection.intersectionList.get(i).draw(g);
+        }
         
-        
+        for(int i = 0; i < Car.carList.size(); i++){
+        	Car.carList.get(i).draw(g);
+        }
         
     }
 }

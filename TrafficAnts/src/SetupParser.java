@@ -10,14 +10,12 @@ public class SetupParser {
 	public SetupParser(String filename) {
 		this.filename = filename;
 		this.duration = 0;
-
 	}
 	
-	public void initialSetup(){
+	public void initialSetup(Class<? extends Car> carType){
 		populateIntersections();
 		populateRoads();
-		populateCars();
-		System.out.println("Finished loading the Mapfile");
+		populateCars(carType);
 	}
 	//id, x, y, 
 	public void populateIntersections() {
@@ -74,14 +72,15 @@ public class SetupParser {
 				
 				int arg1 = Integer.parseInt(brokenString[1]);
 				int arg2 = Integer.parseInt(brokenString[2]);
-				double arg3 = Double.parseDouble(brokenString[3]);
+				int arg3 = Integer.parseInt(brokenString[3]);
+				double arg4 = Double.parseDouble(brokenString[4]);
 				
 		
-				Intersection start = Intersection.intersectionList.get(arg1);
-				Intersection end = Intersection.intersectionList.get(arg2);
+				Intersection start = Intersection.intersectionList.get(arg2);
+				Intersection end = Intersection.intersectionList.get(arg3);
 				
-				Double speedLimit = arg3;
-				new Road(start, end, speedLimit);
+				Double speedLimit = arg4;
+				new Road(arg1, start, end, speedLimit);
 				
 				counter++;
 			}
@@ -93,7 +92,7 @@ public class SetupParser {
 		}
 	}
 	//start, end, startTime, type
-	public void populateCars(){
+	public void populateCars(Class<? extends Car> carType){
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(
 					this.filename));
@@ -110,16 +109,27 @@ public class SetupParser {
 				int arg1 = Integer.parseInt(brokenString[1]);
 				int arg2 = Integer.parseInt(brokenString[2]);
 				int arg3 = Integer.parseInt(brokenString[3]);
-				String arg4 = brokenString[4];
+				int arg4 = Integer.parseInt(brokenString[4]);
+				String arg5 = brokenString[5];
 				
-				Intersection start = Intersection.intersectionList.get(arg1);
-				Intersection end = Intersection.intersectionList.get(arg2);
+				Intersection start = Intersection.intersectionList.get(arg2);
+				Intersection end = Intersection.intersectionList.get(arg3);
 				
-				if(arg4.compareTo("*") == 0){
-					new CarAStar(start, end, arg3);
-				}else{
-					new CarSwarm(start, end, arg3);
+				if(carType == null) {
+					if(arg5.compareTo("*") == 0){
+						new CarAStar(arg1, start, end, arg4);
+					}else{
+						new CarSwarm(arg1, start, end, arg4);
+					}
+				} else {
+					try {
+						carType.getConstructor(int.class, Intersection.class,Intersection.class,int.class).newInstance(arg1, start, end, arg4);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
+				
 				
 				
 				counter++;

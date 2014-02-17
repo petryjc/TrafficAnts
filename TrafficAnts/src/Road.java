@@ -10,13 +10,16 @@ public class Road extends Time {
 	ArrayList<Car> currentCars;
 	double speedLimit;
 	Point2D dir;
-	ArrayList<Integer> travelTimes = new ArrayList<Integer>();
+	double pheromone;
+	int id;
 	
-	public Road(Intersection start, Intersection end, double speedLimit) {
+	public Road(int id, Intersection start, Intersection end, double speedLimit) {
+		this.id = id;
 		this.start = start;
 		this.end = end;
 		this.speedLimit = speedLimit;
 		Road.maxSpeed = Math.max(Road.maxSpeed,this.speedLimit);
+		pheromone = this.distance()/this.speedLimit;
 		
 		this.currentCars = new ArrayList<Car>();
 		
@@ -33,12 +36,16 @@ public class Road extends Time {
 
 	@Override
 	public void advanceTime() {
-		
 	}
 	
 	public void draw(Graphics g){
 		g.setColor(Color.RED);
 		g.drawLine((((int)this.start.location.getX()) * 5) + DrawPanel.xOffset, (((int)this.start.location.getY()) * DrawPanel.offset) + DrawPanel.yOffset, (((int)this.end.location.getX()) * DrawPanel.offset) + DrawPanel.yOffset, (((int)this.end.location.getY()) * 5) + DrawPanel.yOffset);
+	}
+	
+	@Override
+	public String toString() {
+		return "R:" + this.id;
 	}
 	
 }

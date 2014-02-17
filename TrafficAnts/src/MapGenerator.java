@@ -122,8 +122,9 @@ public class MapGenerator {
 				continue;
 			}
 			
-			if(Math.abs(x - i) < proximity || proximity == -1){
+			if(Math.abs(x - i) < proximity || bestIndex == -1){
 				bestIndex = this.intersectionLocs[y-1][i];
+				proximity = x - i;
 			}
 		}
 		Random r = new Random();

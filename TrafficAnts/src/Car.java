@@ -1,3 +1,7 @@
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 public abstract class Car extends Time{
@@ -86,6 +90,22 @@ public abstract class Car extends Time{
 		this.endTime = Time.ticks;
 		this.finished = true;
 	}
+	
+	public void draw(Graphics g){
+		if(this.finished){
+			return;
+		}
+		if(this.currentRoad == null){
+			return;
+		}
+		Double x = this.currentRoad.start.location.getX() + (this.currentRoad.dir.getX() * this.distanceAlongRoad);
+		Double y = this.currentRoad.start.location.getY() + (this.currentRoad.dir.getY() * this.distanceAlongRoad);
+		Point2D.Double carLoc = new Point2D.Double((x*DrawPanel.offset)+DrawPanel.xOffset ,(y*DrawPanel.offset)+DrawPanel.yOffset);
+		
+		//g.drawString(Integer.toString(this), (int)carLoc.getX() - 2, (int)carLoc.getY() - 2);
+		
+	}
+	
 	
 	public abstract Road nextRoad();
 	

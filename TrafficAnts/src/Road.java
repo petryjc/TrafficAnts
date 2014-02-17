@@ -1,3 +1,5 @@
+import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
@@ -32,6 +34,11 @@ public class Road extends Time {
 	@Override
 	public void advanceTime() {
 		
-	}	
+	}
+	
+	public void draw(Graphics g){
+		g.setColor(Color.RED);
+		g.drawLine((((int)this.start.location.getX()) * 5) + DrawPanel.xOffset, (((int)this.start.location.getY()) * DrawPanel.offset) + DrawPanel.yOffset, (((int)this.end.location.getX()) * DrawPanel.offset) + DrawPanel.yOffset, (((int)this.end.location.getY()) * 5) + DrawPanel.yOffset);
+	}
 	
 }

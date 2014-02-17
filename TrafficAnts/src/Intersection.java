@@ -1,4 +1,8 @@
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -76,6 +80,12 @@ public class Intersection extends Time{
 	
 	public boolean canGoThrough(Car c) {
 		return c.currentRoad == this.currentRoad;
+	}
+	
+	public void draw(Graphics g2){
+		g2.setColor(Color.BLUE);
+		g2.drawOval((((int)this.location.getX()-2) * DrawPanel.offset) + DrawPanel.xOffset, (((int)this.location.getY()-2) * DrawPanel.offset) + DrawPanel.yOffset, 25, 25);
+		g2.fillOval((((int)this.location.getX()-2) * DrawPanel.offset) + DrawPanel.xOffset, (((int)this.location.getY()-2) * DrawPanel.offset) + DrawPanel.yOffset, 25, 25);
 	}
 
 }

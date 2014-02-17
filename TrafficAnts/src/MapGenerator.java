@@ -107,6 +107,7 @@ public class MapGenerator {
 			}
 		}
 	}
+	int roadId = 0;
 	private void connectIntersections(int x,int y){
 		int currentIndex = this.intersectionLocs[y][x];
 		
@@ -130,8 +131,8 @@ public class MapGenerator {
 		double speedLimit = r.nextDouble() * 55;
 		
 		if(bestIndex > -1){
-			this.roadsToWrite.add(new Road(this.intersectionsToWrite.get(bestIndex), this.intersectionsToWrite.get(currentIndex), speedLimit));
-			this.roadsToWrite.add(new Road(this.intersectionsToWrite.get(currentIndex), this.intersectionsToWrite.get(bestIndex), speedLimit));
+			this.roadsToWrite.add(new Road(this.roadId++, this.intersectionsToWrite.get(bestIndex), this.intersectionsToWrite.get(currentIndex), speedLimit));
+			this.roadsToWrite.add(new Road(this.roadId++, this.intersectionsToWrite.get(currentIndex), this.intersectionsToWrite.get(bestIndex), speedLimit));
 		}
 		
 		//eastern
@@ -148,11 +149,12 @@ public class MapGenerator {
 		
 		speedLimit = r.nextDouble() * 55;
 		if(bestIndex > -1){
-			this.roadsToWrite.add(new Road(this.intersectionsToWrite.get(bestIndex),this.intersectionsToWrite.get(currentIndex),speedLimit));
-			this.roadsToWrite.add(new Road(this.intersectionsToWrite.get(currentIndex),this.intersectionsToWrite.get(bestIndex),speedLimit));
+			this.roadsToWrite.add(new Road(this.roadId++, this.intersectionsToWrite.get(bestIndex),this.intersectionsToWrite.get(currentIndex),speedLimit));
+			this.roadsToWrite.add(new Road(this.roadId++, this.intersectionsToWrite.get(currentIndex),this.intersectionsToWrite.get(bestIndex),speedLimit));
 		}
 		
 	}
+	int carId = 0;
 	public void designateCars(){
 		Random r = new Random();
 		int carCounterCap = (int) (this.percentAStar * this.totalNumOfCars); 
@@ -174,9 +176,9 @@ public class MapGenerator {
 			this.carTypes.add(type);
 			
 			if(type == '*'){	
-				this.carsToWrite.add(new CarAStar(this.intersectionsToWrite.get(start), this.intersectionsToWrite.get(end), startTime));
+				this.carsToWrite.add(new CarAStar(carId++, this.intersectionsToWrite.get(start), this.intersectionsToWrite.get(end), startTime));
 			}else{
-				this.carsToWrite.add(new CarAStar(this.intersectionsToWrite.get(start), this.intersectionsToWrite.get(end), startTime));
+				this.carsToWrite.add(new CarAStar(carId++, this.intersectionsToWrite.get(start), this.intersectionsToWrite.get(end), startTime));
 			}
 		}
 	}
@@ -191,11 +193,11 @@ public class MapGenerator {
 				writer.write("i," + i.id + ","+ i.location.x + "," + i.location.y + "\n");
 			}
 			for(Road r : this.roadsToWrite){
-				writer.write("r," + r.start.id + "," + r.end.id + "," + r.speedLimit + "\n");
+				writer.write("r," + r.id + "," + r.start.id + "," + r.end.id + "," + r.speedLimit + "\n");
 			}
 			int counter = 0;
 			for(Car c : this.carsToWrite){
-				writer.write("c," + c.start.id + "," + c.destination.id + "," + c.startTime + "," + this.carTypes.get(counter) + "\n");
+				writer.write("c," + c.id + "," + c.start.id + "," + c.destination.id + "," + c.startTime + "," + this.carTypes.get(counter) + "\n");
 				counter++;
 			}
 			

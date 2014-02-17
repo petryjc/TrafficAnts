@@ -9,8 +9,10 @@ public abstract class Car extends Time{
 	int startTime;
 	double endTime;
 	boolean finished = false;
+	int id;
 	
-	public Car(Intersection start, Intersection destionation, int startTime) {
+	public Car(int id, Intersection start, Intersection destionation, int startTime) {
+		this.id = id;
 		this.start = start;
 		this.destination = destionation;
 		this.startTime = startTime;

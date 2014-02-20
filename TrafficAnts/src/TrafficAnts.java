@@ -4,9 +4,11 @@ import java.util.ArrayList;
 public class TrafficAnts {
 
 	public static void main(String[] args) {
-		String subfilename = "Test1";
+		String subfilename = "Blocking2";
+		tableMaker(10, subfilename);
+		//System.exit(0);
 		run(CarAStar.class, subfilename);
-		run(CarSwarm.class, subfilename);
+		//run(CarSwarm.class, subfilename);
 		run(CarMixedCurrent.class, subfilename);
 		
 		Intersection.intersectionList = new ArrayList<Intersection>();
@@ -23,8 +25,26 @@ public class TrafficAnts {
 		System.out.println("Optimal Time: " + time/Car.carList.size());
 		
 	}
+	
+	public static void tableMaker(int n, String subfilename) {
+		double[] resultsAverage = new double[n];
+		int[] resultsTotal = new int[n];
+		for(int i = 0; i < n; i++) {
+			DataPoint d = run(CarSwarm.class, subfilename);
+			resultsAverage[i] = d.average;
+			resultsTotal[i] = d.totalTime;
+		}
+		for(int i = 0; i < n; i++) {
+			System.out.print(resultsAverage[i] + ",");
+		}
+		System.out.println();
+		for(int i = 0; i < n; i++) {
+			System.out.print(resultsTotal[i] + ",");
+		}
+		System.out.println();
+	}
 
-	public static void run(Class<? extends Car> carType, String subfilename) {
+	public static DataPoint run(Class<? extends Car> carType, String subfilename) {
 		Intersection.intersectionList = new ArrayList<Intersection>();
 		Road.roadList = new ArrayList<Road>();
 		Car.carList = new ArrayList<Car>();
@@ -38,7 +58,7 @@ public class TrafficAnts {
 		JFrame frame = new JFrame();
 		frame.setSize(1000, 1000);
 		frame.add(d);
-		frame.setVisible(true);
+		//frame.setVisible(true);
 		frame.setTitle(carType + "");
 
 		setup.initialSetup(carType);
@@ -104,8 +124,18 @@ public class TrafficAnts {
 		System.out.println("Simulation finished in " + Time.ticks + " ticks");
 		System.out.println();
 		if(carType == CarSwarm.class && averageTime < lastTime){
-			Intersection.persist(averageTime);
+			//Intersection.persist(averageTime);
 		}
 		
+		return new DataPoint(averageTime, Time.ticks);
+	}
+	
+	static class DataPoint{
+		double average;
+		int totalTime;
+		public DataPoint(double average, int totalTime) {
+			this.average = average;
+			this.totalTime = totalTime;
+		}
 	}
 }

@@ -29,7 +29,7 @@ public class TrafficAnts {
 
 		setup.initialSetup(carType);
 		
-		new BlockingCar(Car.carList.size(), Intersection.intersectionList.get(14),Intersection.intersectionList.get(0), 50);
+		//new BlockingCar(Car.carList.size(), Intersection.intersectionList.get(14),Intersection.intersectionList.get(0), 50);
 		
 		double lastTime = 10000;
 		if(carType == CarSwarm.class) {

@@ -5,16 +5,10 @@ public class TrafficAnts {
 
 	public static void main(String[] args) {
 		run(CarAStar.class);
-		ArrayList<Car> astarList = Car.carList;
+		run(CarSwarm.class);
 		run(CarMixedCurrent.class);
-		ArrayList<Car> mixedList = Car.carList;
-		run(CarMixed.class);
-		//run(CarSwarm.class);
-		for (int i = 0; i < mixedList.size(); i++) {
-			if (astarList.get(i).endTime < mixedList.get(i).endTime) {
-				// System.out.println(i);
-			}
-		}
+		
+		//run(CarLost.class);
 	}
 
 	public static void run(Class<? extends Car> carType) {
@@ -33,10 +27,14 @@ public class TrafficAnts {
 		frame.setTitle(carType + "");
 
 		setup.initialSetup(carType);
-		// Intersection.parse();
+		double lastTime = 10000;
+		if(carType == CarSwarm.class) {
+			lastTime = Intersection.parse();
+		}
 		ArrayList<Car> carsLeft = new ArrayList<Car>(Car.carList);
 
-		for (Time.ticks = 0; Time.ticks < 5000 && carsLeft.size() > 0; Time.ticks++) {
+		int duration = 5000;
+		for (Time.ticks = 0; Time.ticks < duration && carsLeft.size() > 0; Time.ticks++) {
 			for (Intersection i : Intersection.intersectionList) {
 				i.advanceTime();
 
@@ -55,14 +53,13 @@ public class TrafficAnts {
 			
 			try {
 				if(frame.isVisible()) {
-					Thread.sleep(100);	
+					Thread.sleep(30);	
 					d.repaint();
 				}
 			} catch (InterruptedException e) {
 				System.out.println("Thread Broke");
 				e.printStackTrace();
 			}
-			System.out.println(Time.ticks);
 		}
 		
 		frame.setEnabled(false);
@@ -78,14 +75,18 @@ public class TrafficAnts {
 			}
 		}
 		System.out.println("Running " + carType);
+		double averageTime = (time + unfinished * duration)/ (Car.carList.size()) ;
 		System.out.println("Average time = "
-				+ (time / (Car.carList.size() - unfinished)));
+				+ averageTime);
 		if (unfinished > 0) {
 			System.out.println(unfinished + " didn't finish");
 		}
 
 		System.out.println("Simulation finished in " + Time.ticks + " ticks");
 		System.out.println();
-		// Intersection.persist();
+		if(carType == CarSwarm.class && averageTime < lastTime){
+			Intersection.persist(averageTime);
+		}
+		
 	}
 }

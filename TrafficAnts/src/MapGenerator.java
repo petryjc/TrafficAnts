@@ -22,9 +22,10 @@ public class MapGenerator {
 	
 	public static void main(String[] args) {
 		 MapGenerator m = new MapGenerator("MapGenTest.txt", 100, 200, 10,
-		 1f, 25000);
+		 1f, 1000);
 		 m.generateMapFile();
 		 m.printArray();
+		 Intersection.persist(10000);
 	}
 	
 	public MapGenerator(String filename, int numberOfCities, int width, int duration, float percentAStar, int totalNumOfCars){
@@ -129,7 +130,7 @@ public class MapGenerator {
 			}
 		}
 		Random r = new Random();
-		double speedLimit = r.nextDouble() * 5 + 5;
+		double speedLimit = r.nextDouble() + 1;
 		
 		if(bestIndex > -1){
 			this.roadsToWrite.add(new Road(this.roadId++, this.intersectionsToWrite.get(bestIndex), this.intersectionsToWrite.get(currentIndex), speedLimit));
@@ -148,7 +149,7 @@ public class MapGenerator {
 			break;
 		}
 		
-		speedLimit = r.nextDouble() * 55;
+		speedLimit = r.nextDouble() + 1;
 		if(bestIndex > -1){
 			this.roadsToWrite.add(new Road(this.roadId++, this.intersectionsToWrite.get(bestIndex),this.intersectionsToWrite.get(currentIndex),speedLimit));
 			this.roadsToWrite.add(new Road(this.roadId++, this.intersectionsToWrite.get(currentIndex),this.intersectionsToWrite.get(bestIndex),speedLimit));

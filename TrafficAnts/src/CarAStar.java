@@ -10,7 +10,7 @@ public class CarAStar extends Car {
 	@Override
 	public Road nextRoad() {
 		if(roadList == null) {
-			roadList = Utils.generateRoute(this, this.start, new Utils.TimeUpdator());
+			roadList = Utils.generateRoute(this.start, this.destination, new Utils.TimeUpdator());
 		} 
 		return roadList.poll();
 	}

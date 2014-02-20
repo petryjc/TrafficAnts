@@ -21,11 +21,9 @@ public class BlockingCar extends Car{
 				this.currentRoad = this.start.getOutgoingRoads().get(0);
 				this.distanceAlongRoad = this.currentRoad.distance() - 3;
 				this.currentRoad.currentCars.add(this);
-				System.out.println("is Blocking");
 			}
 			
 			if(Time.ticks == this.startTime + 100){
-				System.out.println("isnt Blocking");
 				this.finished = true;
 				this.currentRoad.currentCars.remove(this);
 				this.currentRoad = null;

@@ -1,9 +1,14 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -61,7 +66,7 @@ public class Intersection extends Time{
 			for(Intersection i: intersectionList) {
 				HashMap<Road,Double> map = new HashMap<Road,Double>();
 				for(Road r : getOutgoingRoads()) {
-					map.put(r, 0.00001);
+					map.put(r, 1.0/(Utils.routeTime(r.end, i, new Utils.TimeUpdator()) + r.distance()/r.speedLimit));
 				}
 				pheromone.put(i, map);
 			}
@@ -110,10 +115,11 @@ public class Intersection extends Time{
 		return "I:" + this.id;
 	}
 	
-	public static void persist() {
+	public static void persist(double averageTime) {
 		BufferedWriter writer;
 		try {
 			writer = new BufferedWriter(new FileWriter(persistenceFile));
+			writer.write(averageTime + "\n");
 			writer.write("<Intersections>");
 			for(Intersection i: Intersection.intersectionList) {
 				writer.write(convertToXML(i) + "\n");
@@ -141,7 +147,6 @@ public class Intersection extends Time{
                 sb.append(">");
 
                 sb.append(e2.getValue());
-                
                 sb.append("</");
                 sb.append(e2.getKey());
                 sb.append(">");
@@ -159,12 +164,22 @@ public class Intersection extends Time{
         return sb.toString();
 	}
 
-	public static void parse() {
+	public static double parse() {
+		double pastTime = Double.MAX_VALUE;
 		try {
-			File fXmlFile = new File(persistenceFile);
+			InputStream reader = new FileInputStream(new File(persistenceFile));
+			int cur = '"';String build = "";
+			while((cur = reader.read()) != '\n') {
+				build += (char)cur;
+			}
+			System.out.println("Previous best " + build);
+//			BufferedReader r = new BufferedReader(new InputStreamReader(reader));
+			//File fXmlFile = new File(persistenceFile);
+			//fXmlFile.
+			pastTime = Double.parseDouble(build);
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-			Document doc = dBuilder.parse(fXmlFile);
+			Document doc = dBuilder.parse(reader);
 		 
 			doc.getDocumentElement().normalize();
 		 
@@ -208,11 +223,11 @@ public class Intersection extends Time{
 				}
 				
 				
-			}
-			
+			}			
 		} catch (Exception e) {
 			System.out.println("Could not parse the intersection pharamone");
 			e.printStackTrace();
 		}
+		return pastTime;		
 	}
 }

@@ -38,7 +38,26 @@ public class Utils {
 		}
 	}
 	
-	public static Deque<Road> generateRoute(final Car c, Intersection start, MeasurementUpdator updator) {
+	public static class LonerUpdator extends MeasurementUpdator {
+
+		@Override
+		double newMeasurement(double old, Road r) {
+			// TODO Auto-generated method stub
+			return old + r.distance()/r.speedLimit + r.currentCars.size() * 2;
+		}
+		
+	}
+	
+	public static double routeTime(Intersection start, Intersection destination, MeasurementUpdator updator) {
+		Deque<Road> r = generateRoute(start,destination, updator);
+		double distance = 0;
+		while(!r.isEmpty()) {
+			distance += r.peek().distance()/r.poll().speedLimit;
+		}
+		return distance;
+	}
+	
+	public static Deque<Road> generateRoute(Intersection start, Intersection destination, MeasurementUpdator updator) {
 		Comparator<Utils.Search> comparator = new Comparator<Utils.Search>() {
 			public int compare(Utils.Search arg0, Utils.Search arg1) {
 				if(arg0.time < arg1.time)
@@ -58,7 +77,7 @@ public class Utils {
 			if(!beenTo.contains(node)) {
 				
 				beenTo.add(node.state);
-				if(node.state == c.destination){
+				if(node.state == destination){
 					Deque<Road> output = new LinkedList<Road>();
 					while (node.parent != null) {
 						output.push(node.road);

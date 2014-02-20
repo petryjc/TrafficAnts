@@ -41,6 +41,9 @@ public class Road extends Time {
 	public void draw(Graphics g){
 		g.setColor(Color.RED);
 		g.drawLine((((int)this.start.location.getX()) * 5) + DrawPanel.xOffset, (((int)this.start.location.getY()) * DrawPanel.offset) + DrawPanel.yOffset, (((int)this.end.location.getX()) * DrawPanel.offset) + DrawPanel.yOffset, (((int)this.end.location.getY()) * 5) + DrawPanel.yOffset);
+		int midx = Math.abs((int)((this.start.location.getX() + this.end.location.getX())/2)) * DrawPanel.offset + DrawPanel.xOffset;
+		int midy = Math.abs((int)((this.start.location.getY() + this.end.location.getY())/2)) * DrawPanel.offset + DrawPanel.yOffset;
+		g.drawString(String.format("%.2f", this.speedLimit), midx, midy);
 	}
 	
 	@Override

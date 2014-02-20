@@ -31,20 +31,27 @@ public class BlockingCar extends Car{
 		}
 		@Override
 		public void draw(Graphics g){
-			if(this.finished){
+			if (this.finished) {
 				return;
 			}
-			if(this.currentRoad == null){
+			if (this.currentRoad == null) {
 				return;
 			}
-			Double x = this.currentRoad.start.location.getX() + (this.currentRoad.dir.getX() * this.distanceAlongRoad);
-			Double y = this.currentRoad.start.location.getY() + (this.currentRoad.dir.getY() * this.distanceAlongRoad);
-			Point2D.Double carLoc = new Point2D.Double((x*DrawPanel.offset)+DrawPanel.xOffset ,(y*DrawPanel.offset)+DrawPanel.yOffset);
-		
-			
-			g.setColor(Color.ORANGE);
-			
-			g.fillRect((int)carLoc.getX() - 2, (int)carLoc.getY() - 2,30,30);
+
+			Point2D.Double seperateRdOffset = shiftAlongNormal();
+
+			Double x = this.currentRoad.start.location.getX()
+					+ (this.currentRoad.dir.getX() * this.distanceAlongRoad);
+			Double y = this.currentRoad.start.location.getY()
+					+ (this.currentRoad.dir.getY() * this.distanceAlongRoad);
+
+			Point2D.Double carLoc = new Point2D.Double((x * DrawPanel.offset)
+					+ DrawPanel.xOffset + seperateRdOffset.getX(),
+					(y * DrawPanel.offset) + DrawPanel.yOffset
+							+ seperateRdOffset.getY());
+
+			g.setColor(Color.red);
+			g.fillRect((int) carLoc.x - 3, (int) carLoc.y - 3, 6, 6);
 			
 		}
 		

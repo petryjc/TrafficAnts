@@ -105,9 +105,13 @@ public class Intersection extends Time{
 	}
 	
 	public void draw(Graphics g2){
-		g2.setColor(Color.GREEN);
-		g2.drawOval((((int)this.location.getX()-2) * DrawPanel.offset) + DrawPanel.xOffset, (((int)this.location.getY()-2) * DrawPanel.offset) + DrawPanel.yOffset, 25, 25);
-		g2.fillOval((((int)this.location.getX()-2) * DrawPanel.offset) + DrawPanel.xOffset, (((int)this.location.getY()-2) * DrawPanel.offset) + DrawPanel.yOffset, 25, 25);
+		
+		g2.setColor(Color.black);
+		double x = (this.location.getX()-3) * DrawPanel.offset + DrawPanel.xOffset;
+		double y = (this.location.getY()-3) * DrawPanel.offset + DrawPanel.yOffset;
+		int dim = 30;
+		
+		g2.fillRect((int) x, (int) y , dim, dim);		
 	}
 
 	@Override

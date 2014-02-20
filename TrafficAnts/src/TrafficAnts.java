@@ -38,7 +38,7 @@ public class TrafficAnts {
 		JFrame frame = new JFrame();
 		frame.setSize(1000, 1000);
 		frame.add(d);
-		//frame.setVisible(true);
+		frame.setVisible(true);
 		frame.setTitle(carType + "");
 
 		setup.initialSetup(carType);
@@ -82,6 +82,7 @@ public class TrafficAnts {
 		}
 		
 		frame.setEnabled(false);
+		frame.dispose();
 		
 		double time = 0;
 		int unfinished = 0;

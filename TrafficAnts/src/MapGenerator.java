@@ -22,7 +22,7 @@ public class MapGenerator {
 	
 	public static void main(String[] args) {
 		 MapGenerator m = new MapGenerator("MapGenTest.txt", 100, 200, 10,
-		 1f, 25000);
+		 1f, 250);
 		 m.generateMapFile();
 		 m.printArray();
 	}

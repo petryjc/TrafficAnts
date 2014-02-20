@@ -115,9 +115,11 @@ public class SetupParser {
 				Intersection start = Intersection.intersectionList.get(arg2);
 				Intersection end = Intersection.intersectionList.get(arg3);
 				
-				if(carType == null) {
+				if(carType == null || arg5.compareTo("B") == 0) {
 					if(arg5.compareTo("*") == 0){
 						new CarAStar(arg1, start, end, arg4);
+					}else if(arg5.compareTo("B") == 0){
+						new BlockingCar(arg1, start, end, arg4);
 					}else{
 						new CarSwarm(arg1, start, end, arg4);
 					}

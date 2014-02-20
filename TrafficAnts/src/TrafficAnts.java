@@ -25,18 +25,22 @@ public class TrafficAnts {
 		SetupParser setup = new SetupParser("MapGenTest.txt");
 
 		DrawPanel d = new DrawPanel();
+		
 
 		JFrame frame = new JFrame();
 		frame.setSize(1000, 1000);
 		frame.add(d);
-		//frame.setVisible(true);
+		frame.setVisible(true);
 		frame.setTitle(carType + "");
 
 		setup.initialSetup(carType);
+		
+		new BlockingCar(Car.carList.size(), Intersection.intersectionList.get(14),Intersection.intersectionList.get(0), 50);
+		
 		// Intersection.parse();
 		ArrayList<Car> carsLeft = new ArrayList<Car>(Car.carList);
 
-		for (Time.ticks = 0; Time.ticks < 5000 && carsLeft.size() > 0; Time.ticks++) {
+		for (Time.ticks = 0; Time.ticks < 1000 && carsLeft.size() > 0; Time.ticks++) {
 			for (Intersection i : Intersection.intersectionList) {
 				i.advanceTime();
 
@@ -62,7 +66,7 @@ public class TrafficAnts {
 				System.out.println("Thread Broke");
 				e.printStackTrace();
 			}
-			System.out.println(Time.ticks);
+			//System.out.println(Time.ticks);
 		}
 		
 		frame.setEnabled(false);

@@ -21,7 +21,10 @@ public class MapGenerator {
 	final int MIN_DIST_BET_CITIES = 25;
 	
 	public static void main(String[] args) {
-		 MapGenerator m = new MapGenerator("MapGenTest.txt", 100, 200, 10,
+		String subfilename = "Test1";
+		Intersection.persistenceFile = subfilename + "Intersection.xml";
+		
+		 MapGenerator m = new MapGenerator(subfilename + "Map.txt", 100, 200, 10,
 		 1f, 1000);
 		 m.generateMapFile();
 		 m.printArray();

@@ -4,19 +4,33 @@ import java.util.ArrayList;
 public class TrafficAnts {
 
 	public static void main(String[] args) {
-		run(CarAStar.class);
-		run(CarSwarm.class);
-		run(CarMixedCurrent.class);
+		String subfilename = "Test1";
+		run(CarAStar.class, subfilename);
+		run(CarSwarm.class, subfilename);
+		run(CarMixedCurrent.class, subfilename);
 		
-		//run(CarLost.class);
-	}
-
-	public static void run(Class<? extends Car> carType) {
 		Intersection.intersectionList = new ArrayList<Intersection>();
 		Road.roadList = new ArrayList<Road>();
 		Car.carList = new ArrayList<Car>();
 
-		SetupParser setup = new SetupParser("MapGenTest.txt");
+		SetupParser setup = new SetupParser(subfilename + "Map.txt");
+
+		setup.initialSetup(CarAStar.class);
+		double time = 0;
+		for(Car c : Car.carList) {
+			time += Utils.routeTime(c.start, c.destination, new Utils.TimeUpdator());
+		}
+		System.out.println("Optimal Time: " + time/Car.carList.size());
+		
+	}
+
+	public static void run(Class<? extends Car> carType, String subfilename) {
+		Intersection.intersectionList = new ArrayList<Intersection>();
+		Road.roadList = new ArrayList<Road>();
+		Car.carList = new ArrayList<Car>();
+
+		SetupParser setup = new SetupParser(subfilename + "Map.txt");
+		Intersection.persistenceFile = subfilename + "Intersection.xml";
 
 		DrawPanel d = new DrawPanel();
 		
